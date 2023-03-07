@@ -1,0 +1,30 @@
+version: '2'
+
+services:
+  app0:
+    build: 
+      context: app
+    expose:
+      - 80
+    environment:
+      - APP_ID=app0
+  app1:
+    build: 
+      context: app
+    expose:
+      - 80
+    environment:
+      - APP_ID=app1
+  app2:
+    build: 
+      context: app
+    expose:
+      - 80
+    environment:
+      - APP_ID=app2
+  proxy:
+    build: 
+      context: proxy
+    ports:
+      - 7070:80
+      - 5555:5555
