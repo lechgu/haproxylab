@@ -6,7 +6,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var backendParams struct {
+var backendListParams struct {
 	baseURL  string
 	username string
 	password string
@@ -24,7 +24,7 @@ var backendListCommand = &cobra.Command{
 	Use:   "list",
 	Short: "List backends",
 	RunE: func(cmd *cobra.Command, args []string) error {
-		haClient := clients.New(backendParams.baseURL, backendParams.username, backendParams.password)
+		haClient := clients.New(backendListParams.baseURL, backendListParams.username, backendListParams.password)
 		backends, err := haClient.ListBackends()
 		if err != nil {
 			return err
@@ -40,11 +40,11 @@ var backendListCommand = &cobra.Command{
 }
 
 func init() {
-	backendListCommand.Flags().StringVarP(&backendParams.baseURL, "base-url", "b", "", "Dataplane API base URL")
+	backendListCommand.Flags().StringVarP(&backendListParams.baseURL, "base-url", "b", "", "Dataplane API base URL")
 	backendListCommand.MarkFlagRequired("base-url")
-	backendListCommand.Flags().StringVarP(&backendParams.username, "username", "u", "", "Dataplane API user name")
+	backendListCommand.Flags().StringVarP(&backendListParams.username, "username", "u", "", "Dataplane API user name")
 	backendListCommand.MarkFlagRequired("username")
-	backendListCommand.Flags().StringVarP(&backendParams.password, "password", "p", "", "Dataplane API user password")
+	backendListCommand.Flags().StringVarP(&backendListParams.password, "password", "p", "", "Dataplane API user password")
 	backendListCommand.MarkFlagRequired("password")
 
 	backendCmd.AddCommand(backendListCommand)

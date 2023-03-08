@@ -8,7 +8,7 @@ type Backend struct {
 	ServerTimeout  int    `json:"server_timeout"`
 }
 
-// BackendResponse ...
-type BackendResponse struct {
+// BackendsResponse ...
+type BackendsResponse struct {
 	Backends []Backend `json:"data"`
 }
