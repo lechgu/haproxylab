@@ -1,0 +1,46 @@
+config_version: 2
+name: jammy
+dataplaneapi:
+  host: 127.0.0.1
+  port: 5555
+  advertised:
+    api_address: ""
+    api_port: 0
+  scheme:
+  - http
+  transaction:
+    transaction_dir: /tmp/haproxy
+  resources:
+    maps_dir: /etc/haproxy/maps
+    update_map_files: false
+    update_map_files_period: 15
+  user:
+  - name: admin
+    insecure: true
+    password: meT03qRqGGsShzHL6JGhp31ZZf0knRCK
+haproxy:
+  config_file: /etc/haproxy/haproxy.cfg
+  haproxy_bin: /usr/sbin/haproxy
+  master_runtime: /run/haproxy/admin.sock
+  master_worker_mode: true
+  reload:
+    reload_delay: 30
+    reload_strategy: systemd
+log_targets:
+- log_to: file
+  log_file: /var/log/dataplaneapi.log
+  log_level: notice
+  log_format: text
+  log_types:
+  - access
+  - app
+- log_to: syslog
+  log_level: info
+  syslog_address: 127.0.0.1
+  syslog_protocol: tcp
+  syslog_tag: dataplaneapi
+  syslog_level: notice
+  syslog_facility: local0
+  log_types:
+  - access
+  - app

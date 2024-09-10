@@ -1,0 +1,20 @@
+frontend public
+  mode http
+  bind *:7999 name public
+  timeout client 50000
+  default_backend demo
+
+backend demo
+  mode http
+  timeout server 50000
+  timeout connect 5000
+  server app0 localhost:7000
+  server app1 localhost:7001
+  server app2 localhost:7002
+
+userlist haproxy-dataplaneapi
+    user admin insecure-password mypassword
+
+program api
+   command /usr/bin/dataplaneapi --host 0.0.0.0 --port 5555 --haproxy-bin /usr/sbin/haproxy --config-file /usr/local/etc/haproxy/haproxy.cfg --reload-cmd "kill -SIGUSR2 1" --restart-cmd "kill -SIGUSR2 1" --reload-delay 5 --userlist haproxy-dataplaneapi
+   no option start-on-reload

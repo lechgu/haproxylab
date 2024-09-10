@@ -1,32 +1,29 @@
-version: '2'
-
 services:
   app0:
-    build: 
+    build:
       context: app
-    expose:
-      - 80
+    network_mode: host
     environment:
       - APP_ID=app0
+      - PORT=7000
   app1:
-    build: 
+    build:
       context: app
-    expose:
-      - 80
+    network_mode: host
     environment:
       - APP_ID=app1
+      - PORT=7001
   app2:
-    build: 
+    build:
       context: app
-    expose:
-      - 80
+    network_mode: host
     environment:
       - APP_ID=app2
-  proxy:
-    build: 
-      context: proxy
-    ports:
-      - 7070:80
-      - 5555:5555
+      - PORT=7002
+  haproxy:
+    container_name: haproxy
+    image: haproxytech/haproxy-ubuntu:3.0
+    restart: unless-stopped
+    network_mode: host
     volumes:
-      - /Users/lech/out/haproxylab/proxy:/usr/local/etc/haproxy
+      - ./etc/haproxy:/usr/local/etc/haproxy
